@@ -90,4 +90,4 @@ The `require` function only works in a kernel compiled with `CONFIG_KALLSYMS`, o
 
 #### `os.time()`
 
-`os.time()` now takes no arguments and returns the current time in seconds and milliseconds since the UNIX epoch.
+`os.time()` now takes no arguments and returns the current time in seconds and nanoseconds since the UNIX epoch.
