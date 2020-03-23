@@ -853,7 +853,7 @@ static inline int time(void *p)
 /* stdio.h */
 #include <linux/printk.h>
 #define lua_writestring(s,l)	printk("%s", (s))
-#define lua_writeline()		printk("\n")
+#define lua_writeline()		printk(KERN_CONT "\n")
 #define lua_writestringerror	printk
 
 /* string.h */
@@ -872,11 +872,16 @@ static inline int time(void *p)
 #define UCHAR_MAX	(255)
 #define CHAR_BIT	(8)
 
-#undef LUAL_BUFFERSIZE
-#define LUAL_BUFFERSIZE		(64)
+#undef LUAL_BUFFERSIZE /* stack shouldn't be greater than 2048 */
+#define LUAL_BUFFERSIZE		(1024)
 
 #ifndef __LP64__
 #include <asm/div64.h>
+
+/* This function must be custom-added to the kernel */
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37)
+extern s64 div64_s64(s64 dividend, s64 divisor);
+#endif
 
 /* llvm */
 s64 __modti3(s64 a, s64 b);

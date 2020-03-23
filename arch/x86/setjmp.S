@@ -1,4 +1,3 @@
-/* Copyright (c) 2017-2019 CUJO LLC. */
 /* Copyright (c) 2002 H. Peter Anvin <hpa@zytor.com> */
 
 /* SPDX-License-Identifier: GPL-2.0 */
