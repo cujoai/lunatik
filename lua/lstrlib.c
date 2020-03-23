@@ -960,7 +960,9 @@ static void addliteral (lua_State *L, luaL_Buffer *b, int arg) {
       char *buff = luaL_prepbuffsize(b, MAX_ITEM);
       int nb;
       if (!lua_isinteger(L, arg)) {  /* float? */
-#ifndef _KERNEL
+#ifdef _KERNEL
+        nb = 0;
+#else
         lua_Number n = lua_tonumber(L, arg);  /* write as hexa ('%a') */
         nb = lua_number2strx(L, buff, MAX_ITEM, "%" LUA_NUMBER_FRMLEN "a", n);
         checkdp(buff, nb);  /* ensure it uses a dot */
