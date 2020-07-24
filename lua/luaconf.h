@@ -662,7 +662,14 @@
 ** available, otherwise it will use 'ptrdiff_t' (the nearest thing to
 ** 'intptr_t' in C89)
 */
-#define LUA_KCONTEXT	ptrdiff_t
+#ifdef __linux__
+/* stdint.h may not be safe to include together with linux/types.h on all
+** platforms. But linux/types.h always defines uintptr_t as unsigned long, so
+** simply use long instead of intptr_t (which is not available).
+*/
+#define LUA_KCONTEXT long
+#else
+#define LUA_KCONTEXT ptrdiff_t
 
 #if !defined(LUA_USE_C89) && defined(__STDC_VERSION__) && \
     __STDC_VERSION__ >= 199901L
@@ -670,6 +677,7 @@
 #if defined(INTPTR_MAX)  /* even in C99 this type is optional */
 #undef LUA_KCONTEXT
 #define LUA_KCONTEXT	intptr_t
+#endif
 #endif
 #endif
 
